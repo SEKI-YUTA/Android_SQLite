@@ -2,6 +2,7 @@ package com.example.localdatabaseapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
                 CustomerModel customerModel = (CustomerModel) adapterView.getItemAtPosition(i);
                 dataBaseHelper.deleteOne(customerModel);
                 showCustomerList(dataBaseHelper);
+            }
+        });
+
+        lv_customerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CustomerModel customerModel = (CustomerModel) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(MainActivity.this, CustomerDetailActivity.class);
+                intent.putExtra("name", customerModel.getName());
+                intent.putExtra("age", String.valueOf(customerModel.getAge()));
+                startActivity(intent);
+                return true;
             }
         });
 
